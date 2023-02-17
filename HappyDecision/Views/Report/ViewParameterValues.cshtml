@@ -1,0 +1,36 @@
+﻿
+@model IEnumerable<HappyDecision.Models.ParameterValue>
+@{
+    ViewBag.Title = "Parameter Values";
+}
+
+
+<table class="rTable">
+    <tr>
+
+
+        <td class="colTitle" style="width:16%">ParameterValueId</td>
+        <td class="colTitle" style="width:16%">Value</td>
+        <td class="colTitle" style="width:16%">Weight</td>
+        <td class="colTitle" style="width:16%">Explanation</td>
+        <td class="colTitle" style="width:16%">Candidate</td>
+        <td class="colTitle" style="width:16%">Parameter</td>
+        <td class="colTitle" style="width:16%">VotingDistribution</td>
+
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+
+            <td style="width:16%">@item.ParameterValueId</td>
+            <td style="width:16%">@item.Value</td>
+            <td style="width:16%">@item.Weight</td>
+            <td style="width:16%">@item.Explanation</td>
+            <td style="width:16%">@item.Candidate.Name</td>
+            <td style="width:16%">@item.Parameter.Name</td>
+            <td style="width:16%">@item.VotingDistribution.InnerValue</td>
+        </tr>
+    }
+</table>
+

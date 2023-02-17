@@ -1,0 +1,66 @@
+﻿@using HappyDecision.Models;
+@model List<Question>
+@{
+    ViewBag.Title = "Candidate Summary";
+}
+
+<script type="text/javascript" src="~/Scripts/ObtainInitResponse.js"></script>
+
+
+<form action="" name="init">
+    <div class="alert alert-success text-center" role="contentinfo">
+
+        <div class="p-4">
+            <h4>And now for the real voting problem.</h4>
+
+
+        </div>
+
+        <div class="text-center">
+
+            <h4>The three candidates are and the bonus if the candidate wins are: </h4>
+
+
+            @Html.Partial("_preferences", ViewBag.Matrix as HappyDecision.Models.Dto.MatrixDto)
+
+
+        </div>
+
+    </div>
+    <div class="alert alert-primary" role="alert">
+        @for (int i = 0; i < Model.Count; i++)
+        {
+            var question = Model[i];
+            string[] satisfaction = { "Very unsatisfied", "Unsatisfied", "Neutral", "Satisfied", "Very Satisfied" };
+
+            <div id="answers_@(question.QuestionId)">
+                <h4>@(question.Text)</h4>
+
+                <div class="ml-4">
+
+                    <div class="form-check ">
+
+                        @for (int j = 1; j <= 5; j++)
+                        {
+                            <input type="radio" class="form-check-input" name="answer_@(question.QuestionId)" value="@j" id="answer_@(i)_@j"  required />
+                            <label class="form-check-label" for="answer_@(i)_@j">@satisfaction[j - 1]</label>
+                            <br />
+                        }
+
+                    </div>
+
+                </div>
+            </div>
+
+        }
+    </div>
+    <input type="hidden" name="workerId" value="@(Session["workerId"] as string)" />
+</form>
+
+<div class="text-center">
+    <button  class="text-center btn btn-success btn-lg" onclick="SendInitResponse('@Url.Action("VotingTable")'); return false;" >Next</button>
+</div>
+
+
+
+

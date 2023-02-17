@@ -1,0 +1,38 @@
+﻿
+<div style="text-align: center;">
+
+    <form action="@Url.Action("ValidateAndRedirect")" name="DetailsForm" method="post">
+
+        <h4>
+            <span style="color: #FF0000;">
+                <strong>Name of the table</strong> <br>
+
+
+
+
+                <div class="dropdown">
+                    <select id="tableid" class="btn btn-default dropdown-toggle" data-toggle="dropdown" name="TableName" required>
+                        <option value="">-- Select one --</option>
+                        <option value="Answers" name="TableName">Answers</option>
+                        <option value="ParameterValues" name="TableName">Parameter Values</option>
+                        <option value="Consents" name="TableName">Consents</option>
+                        <option value="Demographies" name="TableName">Demographies</option>
+                        <option value="Questions" name="TableName">Questions</option>
+                        <option value="VotingDistributions" name="TableName">Voting Distributions</option>
+                        <option value="SurveyResults" name="TableName">Survey Results</option>
+                        <option value="Candidates" name="TableName">Candidates</option>
+                    </select>
+                </div>
+            </span>
+        </h4>
+        <br />
+
+        <h4> Please enter the password in order to view the required table.  </h4>
+        <br>
+        <input type="password" name="Password" rows="1" required>
+
+        <div class="text-right">
+            <input type="submit" class="text-center btn btn-success" value="Submit" />
+        </div>
+    </form>
+</div>

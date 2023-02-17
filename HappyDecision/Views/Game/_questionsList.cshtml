@@ -1,0 +1,74 @@
+﻿@using HappyDecision.Models;
+@model List<Question>
+@for (int i = 0; i < Model.Count; i++)
+{
+    var question = Model[i];
+    string[] satisfaction = { "Very unsatisfied", "Unsatisfied", "Neutral", "Satisfied", "Very Satisfied" };
+    string[] agreement = { "No", "Not necessarily", "Neutral", "Most Likely", "Definitely" };
+    <div class="row mb-5" id="question_@(question.QuestionId)">
+        <div class="col-2">
+            <span>Question #@(i + 1)</span>
+        </div>
+        <div class="col-10" id="answers_@(question.QuestionId)">
+            <h4>@(question.Text)</h4>
+            <div class="ml-4">
+                @if (question.QuestionType == QuestionType.Scale)
+                {
+                    if (question.ExtraNotes == "Agreement")
+                    {
+                        <div class="form-check ">
+                            
+                            @for (int j = 1; j <= 5; j++)
+                            {
+                                <input type="radio" class="form-check-input" name="answer_@(question.QuestionId)" value="@j" id="answer_@(i)_@j"  required />
+                                <label class="form-check-label" for="answer_@(i)_@j">@agreement[j - 1]</label>
+                                <br />
+                            }
+                            
+                        </div>
+
+
+
+                    }
+                    if (question.ExtraNotes == "Satisfaction")
+                    {
+                        <div class="form-check ">
+                            
+                            @for (int j = 1; j <= 5; j++)
+                            {
+                                <input type="radio" class="form-check-input" name="answer_@(question.QuestionId)" value="@j" id="answer_@(i)_@j" required />
+                                <label class="form-check-label" for="answer_@(i)_@j">@satisfaction[j - 1]</label>
+                                <br />
+                            }
+                            
+                        </div>
+                    }
+
+                }
+                else if (question.QuestionType == QuestionType.Closed)
+                {
+                    <div class="form-check">
+                        @for (int j = 0; j < question.Value.Length; j++)
+                        {
+                            var item = question.Value[j];
+
+                            <input type="radio" class="form-check-input" name="answer_@(question.QuestionId)" value="@item" id="answer_@(i)_@j" required />
+                            <label class="form-check-label" for="answer_@(i)_@j">@item</label>
+                            <br />
+                        }
+                    </div>
+                }
+                else
+                {
+                    <textarea id="answer_@i" name="answer_@(question.QuestionId)" class="form-control" rows="4" required></textarea>
+                }
+            </div>
+
+        </div>
+        <hr />
+    </div>
+
+
+}
+
+

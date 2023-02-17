@@ -1,0 +1,43 @@
+﻿@*@model bool*@
+@{
+    ViewBag.Title = "Intro";
+}
+
+@*@section scripts {
+        <script type="text/javascript" src="~/Scripts/consent.js"></script>
+    }*@
+
+<form action="" name="introForm">
+    <input type="hidden" name="workerId" value="@(Session["workerId"] as string)" />
+    
+</form>
+    <div class="alert alert-success text-center" role="contentinfo">
+
+
+        <div class="p-4">
+           
+            <h4 class="alert-heading">Please read the following instructions carefully.</h4>
+            
+            <p>In this HIT, you will be asked to answer a survey. Details will be given as the HIT progresses.</p>
+            <p>It takes 1 minute to read the instructions and then a few more minutes to complete the survey. </p>
+            <p>
+                Please do NOT click the Refresh button or Back button while working on this HIT.<br />
+                This may cause the HIT to reset and you will not be able to submit it.
+            </p>
+
+        </div>
+        <hr>
+        <div class="text-center">
+
+            @if (Convert.ToInt32(@Session["isPreview"]) == 0)
+            {
+                <input type="button" class="text-center btn btn-success btn-lg" onclick="changePage('@Url.Action("Consent","Game")', 'introForm')" value="Start" />
+                
+            }
+            else
+            {
+                <input type="button" class="text-center btn btn-success btn-lg" value="Preview only" disabled />
+            }
+        </div>
+
+    </div>

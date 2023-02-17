@@ -1,0 +1,32 @@
+﻿@model  IEnumerable<HappyDecision.Models.Demography>
+@{
+    ViewBag.Title = "Demographies";
+}
+
+<table class="rTable">
+    <tr>
+        <td class="colTitle" style="width:16%">#</td>
+
+        <td class="colTitle" style="width:16%">Worker Id</td>
+        <td class="colTitle" style="width:16%">Age</td>
+        <td class="colTitle" style="width:16%">Gender</td>
+        <td class="colTitle" style="width:16%">Country</td>
+        <td class="colTitle" style="width:16%">Education</td>
+
+
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+
+            <td style="width:16%">@item.DemographyId</td>
+            <td style="width:16%">@item.SurveyResultWorkerId</td>
+            <td style="width:16%">@item.Age</td>
+            <td style="width:16%">@item.Gender</td>
+            <td style="width:16%">@item.Country</td>
+            <td style="width:16%">@item.Education</td>
+
+        </tr>
+    }
+</table>

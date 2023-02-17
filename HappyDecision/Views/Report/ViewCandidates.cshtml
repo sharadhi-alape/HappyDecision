@@ -1,0 +1,18 @@
+﻿@model  IEnumerable<HappyDecision.Models.Candidate>
+@{
+    ViewBag.Title = "Candidates";
+}
+<table>
+    <tr>
+        <td>Candidate ID</td>
+        <td>Candidate Name</td>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.CandidateId</td>
+            <td>@item.Name</td>
+        </tr>
+    }
+</table>

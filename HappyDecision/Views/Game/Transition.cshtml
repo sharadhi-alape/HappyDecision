@@ -1,0 +1,70 @@
+﻿@model HappyDecision.Models.Dto.MatrixDto
+@{
+    ViewBag.Title = "Candidate Summary";
+}
+
+
+
+<body onload="setTimeout(TimeoutFunction, 10000)">
+    <form action="" name="transitionForm">
+        <input type="hidden" name="workerId" value="@(Session["workerId"] as string)" />
+    </form>
+
+    <div class="alert alert-success text-center" role="contentinfo">
+
+        <div class="p-4">
+            <h4>And now for the real voting problem.</h4>
+
+
+        </div>
+
+
+
+
+
+        <div class="text-center">
+
+            <h4>The three candidates in your order of preference and the bonus if the candidate wins are: </h4>
+
+
+
+            @Html.Partial("_preferences", Model)
+
+
+        </div>
+
+    </div>
+
+</body>
+
+
+@section scripts {
+    <script>
+            function TimeoutFunction() {
+               var workerId = document.forms["transitionForm"]["workerId"].value;
+            
+                var url = '@Url.Action("VotingTable")' + "?workerId=" + workerId;
+                var insertUrl = '@Url.Action("InsertTimes")';
+                var failUrl = '@Url.Action("ShowError")' + "?lastScreen=votingTable";
+                var screen = "transition";
+
+                $.ajax({
+                    type: "POST",
+
+                    url: insertUrl,
+                    data: {
+                        workerId: workerId,
+                        screen: screen,
+
+                    },
+                    async: false,
+                    success: function () {
+                        window.location.replace(url);
+                    },
+                    error: function (jqXHR, exception) {
+                        window.location.replace(failUrl);
+                    }
+                });
+            }
+    </script>
+}

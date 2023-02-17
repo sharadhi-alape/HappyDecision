@@ -1,0 +1,28 @@
+﻿@model  IEnumerable<HappyDecision.Models.Question>
+@{
+    ViewBag.Title = "Questions";
+}
+
+<table class="rTable">
+    <tr>
+        <td>#</td>
+
+
+        <td>Text</td>
+        <td>Extra Notes</td>
+
+
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+
+            <td>@item.QuestionId</td>
+            <td>@item.Text</td>
+            <td>@item.ExtraNotes</td>
+
+
+        </tr>
+    }
+</table>

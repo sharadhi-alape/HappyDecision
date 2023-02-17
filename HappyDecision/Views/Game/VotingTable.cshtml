@@ -1,0 +1,91 @@
+﻿@model HappyDecision.Models.Dto.MatrixDto
+@{
+    ViewBag.Title = "Voting Table";
+}
+
+
+<body onload="setTimeout(TimeoutFunction, 10000)">
+    <form action="" name="votingTableForm">
+        <input type="hidden" name="workerId" value="@(Session["workerId"] as string)" />
+    </form>
+
+    <div class="alert alert-primary" role="alert">
+
+
+        And now the real voting table is given below.
+
+
+
+
+    </div>
+
+    <table class="table table-bordered">
+        @{
+            var colLength = Model.CandidateMatrix.GetLength(0);
+            var rowLength = Model.CandidateMatrix.GetLength(1);
+
+        }
+        <thead>
+            <tr>
+                <th>#</th>
+                @foreach (int voters in Model.Votes)
+                {
+                    <th>@voters Voters</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @for (var i = 0; i < rowLength; i++)
+            {
+                <tr>
+                    <td scope="row">Rank @(i + 1)</td>
+                    @for (var j = 0; j < colLength; j++)
+                    {
+                        <td>
+
+                            @Model.CandidateMatrix[j, i]
+
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+
+    </table>
+</body>
+
+@section scripts {
+    <script>
+        function TimeoutFunction() {
+             var workerId = document.forms["votingTableForm"]["workerId"].value;
+            
+            var url = '@Url.Action("ResultsTable")' + "?workerId=" + workerId;
+            var insertUrl = '@Url.Action("InsertTimes")';
+            var failUrl = '@Url.Action("ShowError")' + "?lastScreen=votingTable";
+            var screen = "votingTable";
+            //window.location.replace(url)
+
+            $.ajax({
+                type: "POST",
+
+                url: insertUrl,
+                data: {
+                    workerId: workerId,
+                    screen: screen,
+
+                },
+                async: false,
+                success: function () {
+                    //window.location.replace("/ExplainingVoting/Game/DemographicInfo"); //to prevent page back
+                    //window.location.replace("/Game/DemographicInfo");
+                    window.location.replace(url);
+                },
+                error: function (jqXHR, exception) {
+                    //alert(jqXHR.statusText);
+                    //alert("Something went wrong. Please contact the HIT requester.");
+                    window.location.replace(failUrl);
+                }
+            });
+        }
+    </script>
+}

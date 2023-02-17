@@ -1,0 +1,71 @@
+﻿@using HappyDecision.Models;
+@model List<Question>
+@{
+    ViewBag.Title = "Example";
+}
+
+<form action="" name="exampleForm">
+    <input type="hidden" name="workerId" value="@(Session["workerId"] as string)" />
+</form>
+
+<div class="alert alert-primary" role="alert">
+    This is an example for a voting table. Here we are voting on the best cereals in the Middle East. Please go over it carefully.
+    <br />
+    We will ask you a few questions to make sure you understand the table presented to you, please read the explanations carefully.
+    <br />
+
+</div>
+<div class="row">
+    <div class="col-12 text-center">
+        <img src="~/Resources/votingexample.png" class="img-fluid">
+    </div>
+</div>
+<br />
+<div class="alert alert-info" role="alert">
+    Please answer the following questions based on the example above:
+</div>
+<div class="container">
+    @Html.Partial("_questionsList", Model)
+</div>
+
+<div class="text-center">
+    <input type="button" class="text-center btn btn-primary btn-lg" onclick="onNextClick()" value="Next" />
+</div>
+@section scripts {
+    <script>
+    function onNextClick() {
+        var questionIds = [@String.Join(", ", Model.Select(q => q.QuestionId))];
+        var incompleteAnswers = [];
+        var wrongAnswers = [];
+        for (var i = 0; i < questionIds.length; i++) {
+            var questionId = questionIds[i];
+            var answer = $('input[name=answer_' + questionId + ']:checked').val();
+            if (answer == null) {
+                incompleteAnswers.push(i);
+            }
+            else if (answer != questionId) {
+                wrongAnswers.push(i);
+            }
+        }
+
+        if (wrongAnswers.length || incompleteAnswers.length) {
+            var output = ''
+            for (var i = 0; i < wrongAnswers.length; i++) {
+                var wrongAnswer = wrongAnswers[i] + 1;
+                output += 'The answer to question ' + wrongAnswer + ' is incorrect.\n';
+            }
+            for (var i = 0; i < incompleteAnswers.length; i++) {
+                var incompleteAnswer = incompleteAnswers[i] + 1;
+                output += 'The answer to question ' + incompleteAnswer + ' is empty.\n';
+            }
+            output += 'Please fix the answers in order to qualify for the main task';
+            alert(output)
+        }
+        else {
+            changePage('@Url.Action("Transition")', 'exampleForm');
+            }
+    }
+    </script>
+}
+
+

@@ -1,0 +1,93 @@
+﻿@model HappyDecision.Models.Dto.MatrixDto
+
+
+<div class="alert alert-primary" role="alert">
+
+  
+    The voting table is given below:
+</div>
+
+<div class="alert alert-primary" role="alert">
+    <div>
+        Your order of preference and the bonus if the candidate is the winner is:
+        <br>
+        <table>
+            <tr>
+                <th class="colTitle" style="width:16%">Peference</th>
+                <th class="colTitle" style="width:16%">Candidate Name</th>
+                <th class="colTitle" style="width:16%">Bonus</th>
+            </tr>
+            @for (int i = 0; i < Model.UserPreferenceString.Length; i++)
+            {
+                <tr>
+                    <td style="width:16%">@(i + 1)</td>
+                    <td style="width:16%">@Model.UserPreferenceString[i]</td>
+                    <td style="width:16%">$ @(0.2 / (Math.Pow(2, i))) </td>
+                </tr>
+            }
+        </table>
+       
+
+    </div>
+</div>
+
+
+
+
+<table class="table table-bordered">
+    @{
+        var colLength = Model.CandidateMatrix.GetLength(0);
+        var rowLength = Model.CandidateMatrix.GetLength(1);
+
+    }
+    <thead>
+        <tr>
+            <th>#</th>
+            @foreach (int voters in Model.Votes)
+            {
+                <th>@voters Voters</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @for (var i = 0; i < rowLength; i++)
+        {
+            <tr>
+                <td scope="row">Rank @(i + 1)</td>
+                @for (var j = 0; j < colLength; j++)
+                {
+                    <td>
+                        @{
+                            var name = Model.CandidateMatrix[j, i];
+                            var classname = name == Model.WinningCandidate ? "text-success" : "";
+                            <span class="@classname">@name</span>
+                        }
+
+                    </td>
+                }
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            @for (var j = 0; j <= Model.CandidateMatrix.GetLength(0); j++)
+            {
+                if (j - 1 == Model.UserPreferenceColumn)
+                {
+
+                    <td style="border-bottom-style:hidden; border-right-style:hidden; border-left-style:hidden"><img src="~/Resources/Position.PNG"></td>
+
+
+                }
+                else
+                {
+                    <td style="border-bottom-style:hidden; border-right-style:hidden; border-left-style:hidden"></td>
+                }
+            }
+        </tr>
+    </tfoot>
+</table>
+
+<div class="alert alert-success" role="alert">
+    The candidate that wins the elections is @*<a href="#parameters" data-toggle="collapse">*@<strong>@Model.WinningCandidate</strong>@*</a>*@
+</div>

@@ -1,0 +1,32 @@
+﻿@using HappyDecision.Models;
+@model List<Question>
+@{
+    ViewBag.Title = "Questions";
+}
+
+<script type="text/javascript" src="~/Scripts/ObtainSurveyResponse.js"></script>
+
+<div class="alert alert-primary" role="alert">
+    <div>Please take the time to answer the survey. </div>
+    <div>You need to take into consideration your preference as well as the winning candidate while answering the questions.</div>
+
+
+</div>
+
+@Html.Partial("_resultsTable", ViewBag.Matrix as HappyDecision.Models.Dto.MatrixDto)
+
+
+
+
+<form action="" name="surveyForm">
+    <input type="hidden" name="isDone" value="True" />
+    <input type="hidden" name="workerId" value="@(Session["workerId"] as string)" />
+    @Html.Partial("_questionsList", Model)
+   
+</form>
+
+<div class="text-center">
+    <button class="text-center btn btn-success btn-lg" onclick="SendSurveyResponse('@Url.Action("QuizResult")'); return false;" >Next</button>
+</div>
+
+

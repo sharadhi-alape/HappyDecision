@@ -1,0 +1,25 @@
+﻿@model  IEnumerable<HappyDecision.Models.Consent>
+@{
+    ViewBag.Title = "Consents";
+}
+
+<table class="rTable">
+    <tr>
+        <td class="colTitle" style="width:16%">#</td>
+
+        <td class="colTitle" style="width:16%">Worker Id</td>
+        <td class="colTitle" style="width:16%">Agreement</td>
+
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+
+            <td style="width:16%">@item.ConsentId</td>
+            <td style="width:16%">@item.SurveyResultWorkerId</td>
+            <td style="width:16%">@item.DidAgree</td>
+
+        </tr>
+    }
+</table>

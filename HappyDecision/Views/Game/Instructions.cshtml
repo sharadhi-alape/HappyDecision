@@ -1,0 +1,37 @@
+﻿@{
+    ViewBag.Title = "Instructions";
+}
+
+<form action="" name="instructionForm">
+    <input type="hidden" name="workerId" value="@(Session["workerId"] as string)" />
+</form>
+
+
+<div class="row align-items-center">
+    <div class="col-sm-4">
+        <img src="~/Resources/vote.jpg" align="middle">
+    </div>
+    <div class="col-sm-8 align-middle">
+        <ul>
+           
+            <li>In this HIT we will present to you the results of an election that took place in order to determine the best cereal in the Middle East.</li>
+            <li>The results will be presented as a table, where each column represents the preference order of a different group of voters (most favorite, second favorite etc.).</li>
+            <li>Assuming that you are one among all of the voters, you have to answer the survey.</li>
+            <li>To assist you in answering the survey, we will provide you with your order of preference over the candidates.</li>
+            <li>You will be awarded a bonus of $0.2, $0.1 or $0.05 according to the winner being your first, second or third preference respectively.</li>
+            <li>In the next page you will find an example of a voting table to familiarize you with the basic concepts.</li>
+            <li>Please answer the accompanying questions in order to qualify for the main task.</li>
+        </ul>
+    </div>
+</div>
+
+
+
+<br />
+<br />
+
+<div class="text-center">
+   
+    <input type="button" class="text-center btn btn-primary btn-lg" onclick="changePage('@Url.Action("Example")', 'instructionForm')" value="Next" />
+  
+</div>

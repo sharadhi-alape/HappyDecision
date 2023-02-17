@@ -1,0 +1,29 @@
+﻿@model  IEnumerable<HappyDecision.Models.VotingDistribution>
+@{
+    ViewBag.Title = "VotingDistributions";
+}
+
+<table class="rTable">
+    <tr>
+        <td>#</td>
+
+        <td>Voting Distribution</td>
+        <td>Number Of Winners</td>
+
+
+
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+
+            <td>@item.VotingDistributionId</td>
+            <td>@item.InnerValue</td>
+            <td>@item.NumberOfWinners</td>
+
+
+
+        </tr>
+    }
+</table>

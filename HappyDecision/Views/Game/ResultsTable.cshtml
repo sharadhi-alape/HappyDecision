@@ -1,0 +1,17 @@
+﻿@model HappyDecision.Models.Dto.MatrixDto
+@{
+    ViewBag.Title = "Results Table";
+}
+
+@Html.Partial("_resultsTable", Model)
+
+
+
+<form action="" name="resultsTableForm">
+    <input type="hidden" name="workerId" value="@(Session["workerId"] as string)" />
+</form>
+
+<div class="text-center">
+    <input type="button" class="text-center btn btn-primary btn-lg" onclick="changePage('@Url.Action("DummyQuiz")', 'resultsTableForm')" value="Next" />
+</div>
+

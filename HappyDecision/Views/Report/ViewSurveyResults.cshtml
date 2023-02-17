@@ -1,0 +1,43 @@
+﻿@model  IEnumerable<HappyDecision.Models.SurveyResult>
+@{
+    ViewBag.Title = "Survey Results";
+}
+
+<table class="rTable">
+    <tr>
+
+
+        <td>Worker ID</td>
+        <td>Assignment ID</td>
+        <td>Hit ID</td>
+        <td>TurkSubmitTo</td>
+        <td>StartTime</td>
+        <td>EndTime</td>
+        <td>VotingDistribution</td>
+        <td>WinningCandidate</td>
+        <td>DidComplete</td>
+        <td>UserPreference</td>
+        <td>Bonus</td>
+
+
+
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+
+            <td>@item.WorkerId</td>
+            <td>@item.AssignmentId</td>
+            <td>@item.HitId</td>
+            <td>@item.TurkSubmitTo</td>
+            <td>@item.StartTime</td>
+            <td>@item.EndTime</td>
+            <td>@item.VotingDistribution.VotingDistributionId</td>
+            <td>@item.WinningCandidate.Name</td>
+            <td>@item.DidComplete</td>
+            <td>@item.UserPreference</td>
+            <td>@item.Bonus</td>
+        </tr>
+    }
+</table>

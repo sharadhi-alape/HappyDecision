@@ -1,0 +1,19 @@
+﻿@{
+    ViewBag.Title = "Thank You";
+}
+
+<h2 style="text-align: center;"><span style="color: #000080;"><strong>Thank you for your participation!</strong></span></h2>
+<h3 style="text-align: center;"><span style="color: #000080;">You can now submit the assignment.</span></h3>
+<h3 style="text-align: center;"><span style="color: #000080;">You will be paid within 24 hours of submission.</span></h3>
+<h3 style="text-align: center;"><span style="color: #000080;">If you have any problems, please contact the HIT requester.</span></h3>
+
+<br>
+
+
+<form id="PostForm" name="ThankYou" action="@Url.Action("AfterSubmit")" method="POST">
+    <input type="hidden" name="workerId" value="@(Session["workerId"] as string)" />
+    <div style="text-align:center;">
+        <input type="submit" class="myButton" value="Submit assignment" />
+    </div>
+
+</form>

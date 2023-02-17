@@ -1,0 +1,18 @@
+﻿@model HappyDecision.Models.Dto.MatrixDto
+
+
+<table align="center">
+    <tr>
+        <th class="colTitle" style="width:16%">Peference</th>
+        <th class="colTitle" style="width:16%">Candidate Name</th>
+        <th class="colTitle" style="width:16%">Bonus</th>
+    </tr>
+    @for (int i = 0; i < Model.UserPreferenceString.Length; i++)
+    {
+        <tr>
+            <td style="width:16%">@(i + 1)</td>
+            <td style="width:16%">@Model.UserPreferenceString[i]</td>
+            <td style="width:16%">$ @(0.2 / (Math.Pow(2, i))) </td>
+        </tr>
+    }
+</table>

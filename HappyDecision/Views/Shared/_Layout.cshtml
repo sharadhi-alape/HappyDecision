@@ -1,0 +1,29 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evaluating a decision - @ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+
+</head>
+<body>
+    <div>
+        <nav class="navbar navbar-light bg-light">
+            <div class="container">
+                <span class="navbar-brand mb-0 h1">Evaluating a decision</span>
+            </div>
+        </nav>
+        <div class="container">
+            <h3 class="text-center p-4">@ViewBag.Title</h3>
+            @RenderBody()
+        </div>
+    </div>
+
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/app")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

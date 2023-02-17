@@ -1,0 +1,191 @@
+﻿@using HappyDecision.Models;
+@model List<Question>
+@{
+    ViewBag.Title = "Questions";
+}
+
+<script type="text/javascript" src="~/Scripts/ObtainSurveyResponse.js"></script>
+
+<div class="alert alert-primary" role="alert">
+    <div>Please take the time to answer the survey. </div>
+    <div>You need to take into consideration your preference as well as the winning candidate while answering the questions.</div>
+    <div>Your sincere and detailed answers are valuable to us, so please answer honestly.</div>
+
+
+</div>
+
+@Html.Partial("_resultsTable", ViewBag.Matrix as HappyDecision.Models.Dto.MatrixDto)
+
+<form action="" name="surveyForm">
+    <input type="hidden" name="isDone" value="True" />
+    <input type="hidden" name="workerId" value="@(Session["workerId"] as string)" />
+
+    @{
+        Question q1 = new Question();
+        Question q2 = new Question();
+        Question q3 = new Question();
+        Question q4 = new Question();
+        Question q5 = new Question();
+        Question q6 = new Question();
+        for (int i = 0; i < Model.Count; i++)
+        {
+            var question = Model[i];
+            if (question.ExtraNotes == "Satisfaction")
+            {
+                q2 = question;
+            }
+            else if (question.ExtraNotes == "Agreement")
+            {
+                q3 = question;
+            }
+            else if (question.ExtraNotes == "OtherOptions")
+            {
+                q4 = question;
+                q4.Value = question.Value;
+            }
+            else if (question.ExtraNotes == "General Feedback")
+            {
+                q6 = question;
+            }
+            else if (question.ExtraNotes == "Initial Emotion")
+            {
+                q1 = question;
+            }
+            else
+            {
+                q5 = question;
+            }
+
+        }
+        string[] satisfaction = { "Very unsatisfied", "Unsatisfied", "Neutral", "Satisfied", "Very Satisfied" };
+        string[] agreement = { "No", "Not necessarily", "Neutral", "Most Likely", "Definitely" };
+
+
+
+        <div class="row mb-5" id="question_@(q2.QuestionId)">
+            <div class="col-2">
+                <span>Question #1</span>
+            </div>
+            <div class="col-10" id="answers_@(q2.QuestionId)">
+                <h4>@q2.Text</h4>
+                <div class="ml-4">
+                    <div class="form-check ">
+
+                        @for (int j = 1; j <= 5; j++)
+                        {
+                            <input type="radio" class="form-check-input" name="answer_@(q2.QuestionId)" value="@j" id="answer_2_@j" required />
+                            <label class="form-check-label" for="answer_2_@j">@satisfaction[j - 1]</label>
+                            <br />
+                        }
+
+
+                    </div>
+                </div>
+            </div>
+            <hr />
+        </div>
+
+
+        <div class="row mb-5" id="question_@(q3.QuestionId)">
+            <div class="col-2">
+                <span>Question #2</span>
+            </div>
+            <div class="col-10" id="answers_@(q3.QuestionId)">
+                <h4>@q3.Text</h4>
+                <div class="ml-4">
+                    <div class="form-check ">
+
+                        @for (int j = 1; j <= 5; j++)
+                        {
+                            <input type="radio" class="form-check-input" name="answer_@(q3.QuestionId)" value="@j" id="answer_3_@j" onclick="handleClick(this, @q4.QuestionId);" required />
+                            <label class="form-check-label" for="answer_3_@j">@agreement[j - 1]</label>
+                            <br />
+                        }
+
+
+                    </div>
+                </div>
+            </div>
+            <hr />
+        </div>
+
+        <div class="row mb-5" id="question_@(q4.QuestionId)" style="display: none;">
+            <div class="col-2">
+                <span>Question #3</span>
+            </div>
+            <div class="col-10" id="answers_@(q4.QuestionId)">
+                <h4>@q4.Text</h4>
+                <div class="ml-4">
+                    <div class="form-check ">
+
+                        @for (int j = 0; j < 2; j++)
+                        {
+                            var item = q4.Value[j];
+                            <input type="radio" class="form-check-input" name="answer_@(q4.QuestionId)" value="@item" id="answer_4_@j" />
+                            <label class="form-check-label" for="answer_4_@j">@item</label>
+                            <br />
+                        }
+
+
+                    </div>
+                </div>
+            </div>
+            <hr />
+        </div>
+
+        <div class="row mb-5" id="question_@(q1.QuestionId)">
+            <div class="col-2">
+                <span>Question #4</span>
+            </div>
+            <div class="col-10" id="answers_@(q1.QuestionId)">
+                <h4>@q1.Text</h4>
+                <div class="ml-4">
+                    <div class="form-check ">
+
+                        @for (int j = 1; j <= 5; j++)
+                        {
+                            <input type="radio" class="form-check-input" name="answer_@(q1.QuestionId)" value="@j" id="answer_1_@j" required />
+                            <label class="form-check-label" for="answer_1_@j">@satisfaction[j - 1]</label>
+                            <br />
+                        }
+
+
+                    </div>
+                </div>
+            </div>
+            <hr />
+        </div>
+
+        <div class="row mb-5" id="question_@(q5.QuestionId)">
+            <div class="col-2">
+                <span>Question #5</span>
+            </div>
+            <div class="col-10" id="answers_@(q5.QuestionId)">
+                <h4>@q5.Text</h4>
+                <div class="ml-4">
+                    <textarea id="answer_5" name="answer_@(q5.QuestionId)" class="form-control" rows="4" required></textarea>
+                </div>
+            </div>
+            <hr />
+        </div>
+
+        <div class="row mb-5" id="question_@(q6.QuestionId)">
+            <div class="col-2">
+                <span>Question #6</span>
+            </div>
+            <div class="col-10" id="answers_@(q6.QuestionId)">
+                <h4>@q6.Text</h4>
+                <div class="ml-4">
+                    <textarea id="answer_6" name="answer_@(q6.QuestionId)" class="form-control" rows="4" required></textarea>
+                </div>
+            </div>
+            <hr />
+        </div>
+    }
+</form>
+
+<div class="text-center">
+    <button @*type="submit"*@ class="text-center btn btn-success btn-lg" onclick="SendSurveyResponse('@Url.Action("QuizResult")'); return false;">Next</button>
+</div>
+
+
